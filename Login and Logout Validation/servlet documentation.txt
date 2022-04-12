@@ -1,0 +1,17 @@
+ALGORITHM:
+1.create a dynamic web project
+2.create a html files, dashboardservlet,loginservlet and logoutservlet.
+3.create a log in page in html file
+4.create a loginservlet and check whether valid user name and pasword
+5.if valid user exit  connect to dashboard
+6.else print username or password error
+7.dashboard print welcome username and show log out option
+8.after creating  logoutservlet then, if he/she has been loggedin before then print loggedout sucessfully else print login first.
+sprint planning
+1st spirnt:
+1.planning the algorithm
+2.tools required
+3.concepts used for implementation
+2nd sprint:
+1.implementing the code
+2.verifying the test cases

@@ -1,0 +1,159 @@
+Sourcecode:
+
+1.dashboardservlet:
+
+package com.simplilearn.demo;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+
+@WebServlet("/dashboardservlet")
+public class dashboardservlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+       
+    
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		PrintWriter out =response.getWriter();
+		HttpSession session =request.getSession(false);
+		
+		response.setContentType("text/html");
+		if(session!=null) {
+			String userFromSession=(String) session.getAttribute("name");
+			
+			if(userFromSession!=null) {
+				out.print("User Exist : "+ userFromSession);
+				out.print("<a href= 'logoutservlet'>Logoutservlet</a>");
+				 
+			
+			}
+		}
+		else {
+			out.print("Kindly Login First");
+		}
+	}
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		doGet(request, response);
+	}
+
+}
+
+2.loginservlet:
+
+package com.simplilearn.demo;
+
+import java.io.IOException;
+
+import java.io.PrintWriter;
+
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+
+@WebServlet("/loginservlet")
+public class loginservlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+       
+    
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		PrintWriter out= response.getWriter();
+		response.setContentType("text/html");
+		
+		
+		
+		
+		String name= request.getParameter("name");
+		String Password=request.getParameter("password");
+		
+		if(Password.equals("12345")) {
+			out.print("welcome "+name);
+			HttpSession session=request.getSession();
+			session.setAttribute("name",name);
+			request.getRequestDispatcher("link.html").forward(request, response);
+		}
+		
+		
+		else
+		{ 
+			out.print("sorry,username or password error");
+			request.getRequestDispatcher("login.html").include(request, response);
+			
+			
+		}
+		
+		
+		 
+		
+		
+		
+
+	}
+
+	
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		doGet(request, response);
+	}
+
+}
+
+3.logoutservlet:
+
+package com.simplilearn.demo;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+
+@WebServlet("/logoutservlet")
+public class logoutservlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+       
+    
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		PrintWriter out =response.getWriter();
+		HttpSession session =request.getSession(false);
+		
+		if(session!=null) {
+			 //empty the session 
+			session.invalidate();
+			
+			out.print("Logged out Successfully");
+			
+			request.getRequestDispatcher("login.html").include(request, response);
+		}
+		else {
+			out.print("Kindly Login First");
+		}
+		
+	}
+
+	
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		doGet(request, response);
+	}
+
+}
